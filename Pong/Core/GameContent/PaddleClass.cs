@@ -12,7 +12,7 @@ namespace Pong.Core.GameContent
         {
             hitbox = new Rectangle((int)Position.X, (int)Position.Y, Hitbox.X, Hitbox.Y);
         }
-        public void Move(Game height)
+        public void PlayerMove(Game height)
         {
             if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up)) && Position.Y != 0)
             {
@@ -21,6 +21,18 @@ namespace Pong.Core.GameContent
             if ((Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) && Position.Y != height.GraphicsDevice.Viewport.Height - 70)
             {
                 Position.Y += 2;
+            }
+        }
+
+        public void EnemyMove(Game height)
+        {
+            if ((Ball.Position.Y >= Position.Y) && Position.Y != height.GraphicsDevice.Viewport.Height - 70)
+            {
+                Position.Y += 2;
+            }
+            if ((Ball.Position.Y <= Position.Y) && Position.Y != 0)
+            {
+                Position.Y -= 2;
             }
         }
     }

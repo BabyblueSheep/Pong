@@ -33,7 +33,8 @@ namespace Pong.Core
             EnemyPaddle.Position = new Vector2(GraphicsDevice.Viewport.Width - 36, GraphicsDevice.Viewport.Height / 2);
             Ball.Position.X = GraphicsDevice.Viewport.Width / 2;
             Ball.Position.Y = GraphicsDevice.Viewport.Height / 2;
-            Ball.Velocity = new Vector2(5f, 5f);
+
+            Ball.RandomStart();
 
             base.Initialize();
         }
@@ -51,7 +52,9 @@ namespace Pong.Core
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            PlayerPaddle.Move(this);
+            PlayerPaddle.PlayerMove(this);
+            EnemyPaddle.EnemyMove(this);
+
             Ball.Move();
             Ball.Bounce(this);
 
