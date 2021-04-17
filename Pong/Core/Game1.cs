@@ -25,12 +25,15 @@ namespace Pong.Core
 
         protected override void Initialize()
         {
-            PlayerPaddle = new PaddleClass(new Rectangle(10, GraphicsDevice.Viewport.Height / 2, 16, 70));
-            EnemyPaddle = new PaddleClass(new Rectangle(GraphicsDevice.Viewport.Width - 36, GraphicsDevice.Viewport.Height / 2, 16, 70));
-            Ball = new Ball(new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2));
+            PlayerPaddle = new PaddleClass(new Rectangle(0, 0, 16, 70));
+            EnemyPaddle = new PaddleClass(new Rectangle(0, 0, 16, 70));
+            Ball = new Ball(new Rectangle(0, 0, 16, 16));
 
             PlayerPaddle.Position = new Vector2(10, GraphicsDevice.Viewport.Height / 2);
             EnemyPaddle.Position = new Vector2(GraphicsDevice.Viewport.Width - 36, GraphicsDevice.Viewport.Height / 2);
+            Ball.Position.X = GraphicsDevice.Viewport.Width / 2;
+            Ball.Position.Y = GraphicsDevice.Viewport.Height / 2;
+            Ball.Velocity = new Vector2(5f, 5f);
 
             base.Initialize();
         }
@@ -56,6 +59,9 @@ namespace Pong.Core
             {
                 PlayerPaddle.Position.Y += 2;
             }
+
+            Ball.Position.X += Ball.Velocity.X;
+            Ball.Position.Y += Ball.Velocity.Y;
 
             base.Update(gameTime);
         }
