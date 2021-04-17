@@ -51,17 +51,9 @@ namespace Pong.Core
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up)) && PlayerPaddle.Position.Y != 0)
-            {
-                PlayerPaddle.Position.Y -= 2;
-            }
-            if ((Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) && PlayerPaddle.Position.Y != GraphicsDevice.Viewport.Height - 70)
-            {
-                PlayerPaddle.Position.Y += 2;
-            }
-
-            Ball.Position.X += Ball.Velocity.X;
-            Ball.Position.Y += Ball.Velocity.Y;
+            PlayerPaddle.Move(this);
+            Ball.Move();
+            Ball.Bounce(this);
 
             base.Update(gameTime);
         }
