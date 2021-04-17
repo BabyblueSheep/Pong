@@ -6,11 +6,10 @@ namespace Pong.Core.GameContent
     {
         public Vector2 Position;
         public Rectangle Hitbox;
-        public Vector2 Velocity;
 
-        public Ball(Rectangle hitbox)
+        public Ball(Vector2 position)
         {
-            hitbox = new Rectangle((int)Position.X, (int)Position.Y, Hitbox.X, Hitbox.Y);
+            Position = position;
         }
     }
 }
