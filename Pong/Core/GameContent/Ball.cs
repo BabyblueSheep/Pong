@@ -24,20 +24,20 @@ namespace Pong.Core.GameContent
             switch (rd2)
             {
                 case 0:
-                    Velocity.X = 5f;
-                    Velocity.Y = 5f;
+                    Velocity.X = 3f;
+                    Velocity.Y = 3f;
                     break;
                 case 1:
-                    Velocity.X = -5f;
-                    Velocity.Y = 5f;
+                    Velocity.X = -3f;
+                    Velocity.Y = 3f;
                     break;
                 case 2:
-                    Velocity.X = 5f;
-                    Velocity.Y = -5f;
+                    Velocity.X = 3f;
+                    Velocity.Y = -3f;
                     break;
                 case 3:
-                    Velocity.X = -5f;
-                    Velocity.Y = -5f;
+                    Velocity.X = -3f;
+                    Velocity.Y = -3f;
                     break;
             }
         }
@@ -56,9 +56,16 @@ namespace Pong.Core.GameContent
             Position.Y += Velocity.Y;
         }
 
-        public void BouncePaddle()
+        public void BouncePaddle(PaddleClass playerpaddle, PaddleClass enemypaddle)
         {
-
+            if (Hitbox.Intersects(playerpaddle.Hitbox))
+            {
+                Velocity = -Velocity;
+            }
+            if (Hitbox.Intersects(enemypaddle.Hitbox))
+            {
+                Velocity = -Velocity;
+            }
         }
     }
 }

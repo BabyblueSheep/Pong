@@ -57,6 +57,7 @@ namespace Pong.Core
 
             Ball.Move();
             Ball.Bounce(this);
+            Ball.BouncePaddle(PlayerPaddle, EnemyPaddle);
 
             base.Update(gameTime);
         }
