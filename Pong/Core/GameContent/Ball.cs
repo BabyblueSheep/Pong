@@ -10,32 +10,20 @@ namespace Pong.Core.GameContent
         public Vector2 Velocity;
 
         int rd2;
-
-        public Ball(Rectangle hitbox)
-        {
-            hitbox = new Rectangle((int)Position.X, (int)Position.Y, Hitbox.X, Hitbox.Y);
-        }
+        int bounce = 1;
 
         public void RandomStart()
         {
             Random rd = new Random();
-            rd2 = rd.Next(0, 4);
+            rd2 = rd.Next(0, 2);
 
             switch (rd2)
             {
                 case 0:
-                    Velocity.X = 3f;
-                    Velocity.Y = 3f;
-                    break;
-                case 1:
                     Velocity.X = -3f;
                     Velocity.Y = 3f;
                     break;
-                case 2:
-                    Velocity.X = 3f;
-                    Velocity.Y = -3f;
-                    break;
-                case 3:
+                case 1:
                     Velocity.X = -3f;
                     Velocity.Y = -3f;
                     break;
@@ -58,13 +46,24 @@ namespace Pong.Core.GameContent
 
         public void BouncePaddle(PaddleClass playerpaddle, PaddleClass enemypaddle)
         {
-            if (Hitbox.Intersects(playerpaddle.Hitbox))
+            if (Hitbox.Intersects(playerpaddle.Hitbox) && bounce == 1)
             {
-                Velocity = -Velocity;
+                Velocity.X = -Velocity.X;
+                bounce = 0;
             }
-            if (Hitbox.Intersects(enemypaddle.Hitbox))
+            if (Hitbox.Intersects(enemypaddle.Hitbox) && bounce == 0)
             {
-                Velocity = -Velocity;
+                Velocity.X = -Velocity.X;
+                bounce = 1;
+            }
+        }
+
+        public void Return(Game width)
+        {
+            if (Position.X <= 0)
+            {
+                Position = new Vector2(width.GraphicsDevice.Viewport.Width / 2, width.GraphicsDevice.Viewport.Height / 2);
+                RandomStart();
             }
         }
     }

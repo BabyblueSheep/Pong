@@ -25,14 +25,14 @@ namespace Pong.Core
 
         protected override void Initialize()
         {
-            PlayerPaddle = new PaddleClass(new Rectangle(0, 0, 16, 70));
-            EnemyPaddle = new PaddleClass(new Rectangle(0, 0, 16, 70));
-            Ball = new Ball(new Rectangle(0, 0, 16, 16));
+            PlayerPaddle = new PaddleClass();
+            EnemyPaddle = new PaddleClass();
+            Ball = new Ball();
 
             PlayerPaddle.Position = new Vector2(10, GraphicsDevice.Viewport.Height / 2);
             EnemyPaddle.Position = new Vector2(GraphicsDevice.Viewport.Width - 36, GraphicsDevice.Viewport.Height / 2);
-            Ball.Position.X = GraphicsDevice.Viewport.Width / 2;
-            Ball.Position.Y = GraphicsDevice.Viewport.Height / 2;
+
+            Ball.Position =  new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
 
             Ball.RandomStart();
 
@@ -52,12 +52,18 @@ namespace Pong.Core
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            PlayerPaddle.Hitbox = new Rectangle((int)PlayerPaddle.Position.X, (int)PlayerPaddle.Position.Y, 16, 70);
+            EnemyPaddle.Hitbox = new Rectangle((int)EnemyPaddle.Position.X, (int)EnemyPaddle.Position.Y, 16, 70);
+
+            Ball.Hitbox = new Rectangle((int)Ball.Position.X, (int)Ball.Position.Y, 16, 16);
+
             PlayerPaddle.PlayerMove(this);
             EnemyPaddle.EnemyMove(this);
 
             Ball.Move();
             Ball.Bounce(this);
             Ball.BouncePaddle(PlayerPaddle, EnemyPaddle);
+            Ball.Return(this);
 
             base.Update(gameTime);
         }
@@ -67,9 +73,9 @@ namespace Pong.Core
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
-            spriteBatch.Draw(paddle, PlayerPaddle.Position, Color.White);
-            spriteBatch.Draw(ball, Ball.Position, Color.White);
-            spriteBatch.Draw(paddle, EnemyPaddle.Position, Color.White);
+            spriteBatch.Draw(paddle, PlayerPaddle.Hitbox, Color.White);
+            spriteBatch.Draw(ball, Ball.Hitbox, Color.White);
+            spriteBatch.Draw(paddle, EnemyPaddle.Hitbox, Color.White);
             spriteBatch.End();
 
             // TODO: Add your drawing code here

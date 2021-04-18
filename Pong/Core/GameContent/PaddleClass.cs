@@ -8,19 +8,18 @@ namespace Pong.Core.GameContent
         public Vector2 Position;
         public Rectangle Hitbox;
 
-        public PaddleClass(Rectangle hitbox)
+        public PaddleClass()
         {
-            hitbox = new Rectangle((int)Position.X, (int)Position.Y, Hitbox.X, Hitbox.Y);
         }
         public void PlayerMove(Game height)
         {
             if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up)) && Position.Y != 0)
             {
-                Position.Y -= 2;
+                Position.Y -= 3;
             }
             if ((Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) && Position.Y != height.GraphicsDevice.Viewport.Height - 70)
             {
-                Position.Y += 2;
+                Position.Y += 3;
             }
         }
 
@@ -28,11 +27,11 @@ namespace Pong.Core.GameContent
         {
             if ((Ball.Position.Y >= Position.Y) && Position.Y != height.GraphicsDevice.Viewport.Height - 70)
             {
-                Position.Y += 2;
+                Position.Y += 3;
             }
             if ((Ball.Position.Y <= Position.Y) && Position.Y != 0)
             {
-                Position.Y -= 2;
+                Position.Y -= 3;
             }
         }
     }
