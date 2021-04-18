@@ -15,17 +15,30 @@ namespace Pong.Core.GameContent
         public void RandomStart()
         {
             Random rd = new Random();
-            rd2 = rd.Next(0, 2);
+            rd2 = rd.Next(0, 4);
 
             switch (rd2)
             {
                 case 0:
-                    Velocity.X = -3f;
+                    Velocity.X = 3f;
                     Velocity.Y = 3f;
+                    bounce = 0;
                     break;
                 case 1:
+                    Velocity.X = 3f;
+                    Velocity.Y = -3f;
+                    bounce = 0;
+                    break;
+                case 2:
+                    Velocity.X = -3f;
+                    Velocity.Y = 3f;
+                    bounce = 1;
+                    break;
+
+                case 3:
                     Velocity.X = -3f;
                     Velocity.Y = -3f;
+                    bounce = 1;
                     break;
             }
         }
@@ -63,8 +76,16 @@ namespace Pong.Core.GameContent
             if (Position.X <= 0)
             {
                 Position = new Vector2(width.GraphicsDevice.Viewport.Width / 2, width.GraphicsDevice.Viewport.Height / 2);
+                Velocity = new Vector2(3f, 3f);
                 RandomStart();
             }
+            if (Position.X >= width.GraphicsDevice.Viewport.Width)
+            {
+                Position = new Vector2(width.GraphicsDevice.Viewport.Width / 2, width.GraphicsDevice.Viewport.Height / 2);
+                Velocity = new Vector2(3f, 3f);
+                RandomStart();
+            }
+
         }
     }
 }

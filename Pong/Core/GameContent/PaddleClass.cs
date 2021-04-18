@@ -25,11 +25,11 @@ namespace Pong.Core.GameContent
 
         public void EnemyMove(Game height)
         {
-            if ((Ball.Position.Y >= Position.Y) && Position.Y != height.GraphicsDevice.Viewport.Height - 70)
+            if ((Ball.Position.Y >= Position.Y) && Position.Y <= height.GraphicsDevice.Viewport.Height - 70)
             {
                 Position.Y += 3;
             }
-            if ((Ball.Position.Y <= Position.Y) && Position.Y != 0)
+            if ((Ball.Position.Y <= Position.Y) && Position.Y >= 0)
             {
                 Position.Y -= 3;
             }
