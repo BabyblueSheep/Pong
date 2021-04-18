@@ -13,11 +13,11 @@ namespace Pong.Core.GameContent
         }
         public void PlayerMove(Game height)
         {
-            if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up)) && Position.Y != 0)
+            if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up)) && Position.Y >= 0)
             {
                 Position.Y -= 3;
             }
-            if ((Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) && Position.Y != height.GraphicsDevice.Viewport.Height - 70)
+            if ((Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) && Position.Y <= height.GraphicsDevice.Viewport.Height - 70)
             {
                 Position.Y += 3;
             }

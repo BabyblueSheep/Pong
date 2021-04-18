@@ -11,6 +11,7 @@ namespace Pong.Core.GameContent
 
         int rd2;
         int bounce = 1;
+        int counter = 0;
 
         public void RandomStart()
         {
@@ -62,27 +63,51 @@ namespace Pong.Core.GameContent
             if (Hitbox.Intersects(playerpaddle.Hitbox) && bounce == 1)
             {
                 Velocity.X = -Velocity.X;
+                if (Velocity.X != 11f && counter > 5)
+                {
+                    Velocity.X += 1f;
+                    counter = 1;
+                }
+                if (Velocity.Y != 11f && counter > 5)
+                {
+                    Velocity.Y += 1f;
+                    counter = 1;
+                }
                 bounce = 0;
+                counter += 1;
             }
             if (Hitbox.Intersects(enemypaddle.Hitbox) && bounce == 0)
             {
                 Velocity.X = -Velocity.X;
+                if (Velocity.X != -18f && counter > 5)
+                {
+                    Velocity.X -= 1f;
+                    counter = 1;
+                }
+                if (Velocity.Y != -18f && counter > 5)
+                {
+                    Velocity.Y -= 1f;
+                    counter = 1;
+                }
                 bounce = 1;
+                counter += 1;
             }
         }
 
-        public void Return(Game width)
+        public void Return(Game width, Score score)
         {
             if (Position.X <= 0)
             {
                 Position = new Vector2(width.GraphicsDevice.Viewport.Width / 2, width.GraphicsDevice.Viewport.Height / 2);
                 Velocity = new Vector2(3f, 3f);
+                score.enemyscore++;
                 RandomStart();
             }
             if (Position.X >= width.GraphicsDevice.Viewport.Width)
             {
                 Position = new Vector2(width.GraphicsDevice.Viewport.Width / 2, width.GraphicsDevice.Viewport.Height / 2);
                 Velocity = new Vector2(3f, 3f);
+                score.playerscore++;
                 RandomStart();
             }
 

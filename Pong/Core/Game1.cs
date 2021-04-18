@@ -10,10 +10,17 @@ namespace Pong.Core
         public Texture2D paddle;
         public Texture2D ball;
 
+        public SpriteFont score;
+
         public GraphicsDeviceManager graphics;
         public SpriteBatch spriteBatch;
+
         public PaddleClass PlayerPaddle;
         public PaddleClass EnemyPaddle;
+
+        public Score ScorePlayer;
+        public Score ScoreEnemy;
+
         public Ball Ball;
 
         public Game1()
@@ -28,11 +35,17 @@ namespace Pong.Core
             PlayerPaddle = new PaddleClass();
             EnemyPaddle = new PaddleClass();
             Ball = new Ball();
+            ScorePlayer = new Score();
+            ScoreEnemy = new Score();
 
             PlayerPaddle.Position = new Vector2(10, GraphicsDevice.Viewport.Height / 2);
             EnemyPaddle.Position = new Vector2(GraphicsDevice.Viewport.Width - 36, GraphicsDevice.Viewport.Height / 2);
 
             Ball.Position =  new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
+
+            ScorePlayer.Position = new Vector2(GraphicsDevice.Viewport.Width / 2 - 150, GraphicsDevice.Viewport.Height / 2);
+            ScoreEnemy.Position = new Vector2(GraphicsDevice.Viewport.Width / 2 + 100, GraphicsDevice.Viewport.Height / 2);
+
 
             Ball.RandomStart();
 
@@ -45,6 +58,7 @@ namespace Pong.Core
 
             paddle = Content.Load<Texture2D>("paddle");
             ball = Content.Load<Texture2D>("ball");
+            score = Content.Load<SpriteFont>("comic");
         }
 
         protected override void Update(GameTime gameTime)
@@ -63,7 +77,7 @@ namespace Pong.Core
             Ball.Move();
             Ball.Bounce(this);
             Ball.BouncePaddle(PlayerPaddle, EnemyPaddle);
-            Ball.Return(this);
+            Ball.Return(this, ScorePlayer, ScoreEnemy);
 
             base.Update(gameTime);
         }
@@ -73,9 +87,15 @@ namespace Pong.Core
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
+
+            spriteBatch.DrawString(score, "" + ScorePlayer.playerscore, ScorePlayer.Position, Color.Gray);
+            spriteBatch.DrawString(score, "" + ScoreEnemy.playerscore, ScoreEnemy.Position, Color.Gray);
+
             spriteBatch.Draw(paddle, PlayerPaddle.Hitbox, Color.White);
             spriteBatch.Draw(ball, Ball.Hitbox, Color.White);
             spriteBatch.Draw(paddle, EnemyPaddle.Hitbox, Color.White);
+
+
             spriteBatch.End();
 
             // TODO: Add your drawing code here
